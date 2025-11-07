@@ -73,5 +73,7 @@ fun InsertarNum(num: String, listaEnteros: MutableList<Int>, listaNegativos: Mut
         } catch (e: Exception) {
             println("Caracter no valido")
         }
+    }else{
+        println("Introduce un numero")
     }
 }
