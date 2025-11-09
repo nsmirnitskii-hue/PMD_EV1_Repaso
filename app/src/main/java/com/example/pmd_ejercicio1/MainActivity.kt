@@ -1,7 +1,9 @@
 package com.example.pmd_ejercicio1
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
@@ -20,9 +22,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pmd_ejercicio1.ui.theme.PMD_Ejercicio1Theme
+import kotlin.collections.mutableListOf
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,14 +45,16 @@ fun Alicacion(){
     var listaEnteros = remember { mutableListOf<Int>() }
     var listaNegativos = remember { mutableListOf<Int>() }
     var listaCero = remember { mutableListOf<Int>() }
-    var mensajeError by remember { mutableStateOf("") }
+    var mensajeError: String = ""
+    val context = LocalContext.current
     Column(modifier = Modifier.fillMaxSize()
         .padding(16.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally) {
         Text("Introduce un numero entero positivo, negativo o cero")
-        Text("aqui pondremos el mensaje de error",
-            color = Color.Red)
+
+         Text("aqui sera el mansaje de error",
+             color = Color.Red)
         OutlinedTextField(
             value = numeroEntrada,
             onValueChange = {newNumero ->
@@ -60,27 +66,38 @@ fun Alicacion(){
             var numero = numeroEntrada
             if (numero.isNotEmpty()) {
                 try {
-                    val numEntero = numero.toInt()
+                    var numEntero = numero.toInt()
                     if (numEntero > 0) {
                         listaEnteros.add(numEntero)
+                        numeroEntrada = ""
                     } else if (numEntero < 0) {
                         listaNegativos.add(numEntero)
+                        numeroEntrada = ""
                     } else {
                         listaCero.add(numEntero)
+                        numeroEntrada = ""
                     }
                 } catch (e: Exception) {
+                    Toast.makeText(context, "Se permite solo numeros", Toast.LENGTH_LONG).show()
                     // el error se tiene que imprimir en ventana en un texto en rojo
                     // el error tambien se tiene que ver con Toast
-                    println("Caracter no valido")
+
                 }
             }else{
-                println("Introduce un numero")
+                Toast.makeText(context, "Introduce un numero", Toast.LENGTH_LONG).show()
             }
+
         }) {
             Text("Añadir numero")
 
         }
+        Button({
+
+        }) {Text("Inseñar las listas") }
     }
 
+
 }
+
+
 
