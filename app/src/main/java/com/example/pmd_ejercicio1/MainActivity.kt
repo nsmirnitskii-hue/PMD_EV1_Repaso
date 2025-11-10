@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -48,13 +49,12 @@ fun Alicacion(){
     var mensajeError: String = ""
     val context = LocalContext.current
     Column(modifier = Modifier.fillMaxSize()
-        .padding(16.dp),
+        .padding(40.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally) {
         Text("Introduce un numero entero positivo, negativo o cero")
 
-         Text("aqui sera el mansaje de error",
-             color = Color.Red)
+         Text("aqui sera el mansaje de error",color = Color.Red)
         OutlinedTextField(
             value = numeroEntrada,
             onValueChange = {newNumero ->
@@ -66,15 +66,18 @@ fun Alicacion(){
             var numero = numeroEntrada
             if (numero.isNotEmpty()) {
                 try {
-                    var numEntero = numero.toInt()
-                    if (numEntero > 0) {
-                        listaEnteros.add(numEntero)
+                    var num = numero.toInt()
+                    if (num > 0) {
+                        listaEnteros.add(num)
+                        Toast.makeText(context,"El numero $num se ha insertado", Toast.LENGTH_LONG).show()
                         numeroEntrada = ""
-                    } else if (numEntero < 0) {
-                        listaNegativos.add(numEntero)
+                    } else if (num < 0) {
+                        listaNegativos.add(num)
+                        Toast.makeText(context,"El numero $num se ha insertado", Toast.LENGTH_LONG).show()
                         numeroEntrada = ""
                     } else {
-                        listaCero.add(numEntero)
+                        listaCero.add(num)
+                        Toast.makeText(context,"El numero $num se ha insertado", Toast.LENGTH_LONG).show()
                         numeroEntrada = ""
                     }
                 } catch (e: Exception) {
@@ -95,7 +98,14 @@ fun Alicacion(){
 
         }) {Text("Inseñar las listas") }
     }
-
+    LazyColumn(modifier = Modifier.fillMaxSize()
+        .padding(16.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally){
+        item {
+             Text("Numeros enteros: $listaEnteros y total de numeros: ${listaEnteros.size}")
+        }
+    }
 
 }
 
