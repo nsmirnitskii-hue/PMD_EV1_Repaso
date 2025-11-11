@@ -46,15 +46,15 @@ fun Alicacion(){
     var listaEnteros = remember { mutableListOf<Int>() }
     var listaNegativos = remember { mutableListOf<Int>() }
     var listaCero = remember { mutableListOf<Int>() }
+    var mensajeError: String = ""
     val context = LocalContext.current
     Column(modifier = Modifier.fillMaxSize()
-        .padding(16.dp),
+        .padding(40.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally) {
         Text("Introduce un numero entero positivo, negativo o cero")
 
-        Text("aqui sera el mansaje de error",
-            color = Color.Red)
+         Text("aqui sera el mansaje de error",color = Color.Red)
         OutlinedTextField(
             value = numeroEntrada,
             onValueChange = {newNumero ->
@@ -66,19 +66,19 @@ fun Alicacion(){
             var numero = numeroEntrada
             if (numero.isNotEmpty()) {
                 try {
-                    var numEntero = numero.toInt()
-                    if (numEntero > 0) {
-                        listaEnteros.add(numEntero)
+                    var num = numero.toInt()
+                    if (num > 0) {
+                        listaEnteros.add(num)
+                        Toast.makeText(context,"El numero $num se ha insertado", Toast.LENGTH_LONG).show()
                         numeroEntrada = ""
-                        Toast.makeText(context, "El numero $numEntero se ha insertado", Toast.LENGTH_LONG).show()
-                    } else if (numEntero < 0) {
-                        listaNegativos.add(numEntero)
+                    } else if (num < 0) {
+                        listaNegativos.add(num)
+                        Toast.makeText(context,"El numero $num se ha insertado", Toast.LENGTH_LONG).show()
                         numeroEntrada = ""
-                        Toast.makeText(context, "El numero $numEntero se ha insertado", Toast.LENGTH_LONG).show()
                     } else {
-                        listaCero.add(numEntero)
+                        listaCero.add(num)
+                        Toast.makeText(context,"El numero $num se ha insertado", Toast.LENGTH_LONG).show()
                         numeroEntrada = ""
-                        Toast.makeText(context, "El numero $numEntero se ha insertado", Toast.LENGTH_LONG).show()
                     }
                 } catch (e: Exception) {
                     Toast.makeText(context, "Se permite solo numeros", Toast.LENGTH_LONG).show()
@@ -97,16 +97,17 @@ fun Alicacion(){
         Button({
 
         }) {Text("Inseñar las listas") }
-        Column(modifier = Modifier.fillMaxSize()
-            .padding(16.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally){
-            listaEnteros.forEach {
-                Text("Lista de numeros positivos: $listaEnteros y total de numeros: "+listaEnteros.size)
-            }
-
-            Text("Lista de numeros negativos: $listaNegativos")
+    }
+    LazyColumn(modifier = Modifier.fillMaxSize()
+        .padding(16.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally){
+        item {
+             Text("Numeros enteros: $listaEnteros y total de numeros: ${listaEnteros.size}")
         }
     }
 
 }
+
+
+
