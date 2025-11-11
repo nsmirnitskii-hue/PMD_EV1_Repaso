@@ -97,5 +97,16 @@ fun Alicacion(){
         Button({
 
         }) {Text("Inseñar las listas") }
+        Column(modifier = Modifier.fillMaxSize()
+            .padding(16.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally){
+            listaEnteros.forEach {
+                Text("Lista de numeros positivos: $listaEnteros y total de numeros: "+listaEnteros.size)
+            }
+
+            Text("Lista de numeros negativos: $listaNegativos")
+        }
     }
+
 }
