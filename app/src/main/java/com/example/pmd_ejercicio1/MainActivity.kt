@@ -8,7 +8,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
@@ -24,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pmd_ejercicio1.ui.theme.PMD_Ejercicio1Theme
@@ -46,7 +49,6 @@ fun Alicacion(){
     var listaEnteros = remember { mutableListOf<Int>() }
     var listaNegativos = remember { mutableListOf<Int>() }
     var listaCero = remember { mutableListOf<Int>() }
-    var mensajeError: String = ""
     val context = LocalContext.current
     Column(modifier = Modifier.fillMaxSize()
         .padding(40.dp),
@@ -54,7 +56,6 @@ fun Alicacion(){
         horizontalAlignment = Alignment.CenterHorizontally) {
         Text("Introduce un numero entero positivo, negativo o cero")
 
-         Text("aqui sera el mansaje de error",color = Color.Red)
         OutlinedTextField(
             value = numeroEntrada,
             onValueChange = {newNumero ->
@@ -82,6 +83,7 @@ fun Alicacion(){
                     }
                 } catch (e: Exception) {
                     Toast.makeText(context, "Se permite solo numeros", Toast.LENGTH_LONG).show()
+                    numeroEntrada = ""
                     // el error se tiene que imprimir en ventana en un texto en rojo
                     // el error tambien se tiene que ver con Toast
 
@@ -94,18 +96,26 @@ fun Alicacion(){
             Text("Añadir numero")
 
         }
-        Button({
+       Text("Numeros positivos",
+           fontWeight = FontWeight.Bold)
+        Text(listaEnteros.toString())
+        Text("cantidad de los numeros")
+        Text(listaEnteros.size.toString())
+        Spacer(modifier = Modifier.height(8.dp))
+        Text("Numeros negativos",
+            fontWeight = FontWeight.Bold )
+        Text(listaNegativos.toString())
+        Text("cantidad de los numeros")
+        Text(listaNegativos.size.toString())
+        Spacer(modifier = Modifier.height(8.dp))
+        Text("Ceros",
+            fontWeight = FontWeight.Bold)
+        Text(listaCero.toString())
+        Text("cantidad de los ceros")
+        Text(listaCero.size.toString())
+        Spacer(modifier = Modifier.height(8.dp))
+    }
 
-        }) {Text("Inseñar las listas") }
-    }
-    LazyColumn(modifier = Modifier.fillMaxSize()
-        .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally){
-        item {
-             Text("Numeros enteros: $listaEnteros y total de numeros: ${listaEnteros.size}")
-        }
-    }
 
 }
 
